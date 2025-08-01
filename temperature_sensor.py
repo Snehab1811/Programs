@@ -25,6 +25,6 @@ class TemperatureSensor:
         else:
             return "Invalid"
     
-a=TemperatureSensor()
-print(a.High_Low_temp())
+#a=TemperatureSensor()
+#print(a.High_Low_temp())
     
