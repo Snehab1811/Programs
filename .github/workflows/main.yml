@@ -1,0 +1,37 @@
+name: Sensor Test CICD 
+#this acction will be triggered whenever a push or pull request executed for the repository
+
+on: [push,pull_request]
+
+#Dictionary structure of of yaml file
+jobs:
+  tests:
+  #specified OS to run on
+    runs_on: ubuntu-latest
+    #list of jobs to be performed
+    steps: 
+    #prebuilt github actions to bring each code repo to runner env
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    #setup python 3.13 env
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+    #this will include python packages listed in requirement.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    #runs the tests if fail test= 1 stops the execution and disables the warnings
+    - name: Run Tests
+      run: pytest --maxfail=1 --disable-warnings --tb=short
+
+    #generates coverage report 
+    - name: Generate Coverage Report
+    # | - multiline commands
+      run: |
+        pip install pytest-cov
+        pytest --cov=sensors tests/
