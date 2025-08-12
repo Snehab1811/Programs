@@ -1,6 +1,9 @@
 import pytest
 from unittest.mock import patch
 from temperature_sensor import TemperatureSensor
+import csv
+
+
 
 #test for init
 
@@ -37,11 +40,34 @@ def test_read_temperature_max_10():
         temp_3=sensor.readtemperature()
         assert temp_3 == 50
 
+#trying to add Test case as csv file and parse tc from csv file
+TC_List=[(10,"Low"),            # min_temp-10
+    (20, "Low"),          # min_temp
+    (25, "Meduim"),       # min_temp < temp <= max_temp - 10
+    (30, "Meduim"),       # max_temp - 10 (30)
+    (35, "Meduim"),       # max_temp - 5
+    (40, "Meduim"),       # max_temp
+    (50, "Very High"),    # max_temp + 10
+    (41, "Very High"),    # Just above max_temp
+    (19, "Low")]
+def write_to_CSV_file():
+    #crete csv file
+    with open("tescase_csv.csv",w) as tescase_csv:
+        #header for CSV file(TC)
+        first_row=['mock_temp','expected_output']
+        #write to csv file 
+        csv_writter=csv.DictWriter(tescase_csv, fieldnames = first_row, delimiter=',')
+        csv_writter.writeheader()
+
+        for i in TC_List:
+            csv_writter.writerow(i)
+
+
 # Test cases for High_Low_temp
 # I am patch read_temperature to control the returned value
 
-@pytest.mark.parametrize("mock_temp,expexted_output",[ 
-    (10,"Low")            # min_temp-10
+@pytest.mark.parametrize("mock_temp,expected_output",[ 
+    (10,"Low"),            # min_temp-10
     (20, "Low"),          # min_temp
     (25, "Meduim"),       # min_temp < temp <= max_temp - 10
     (30, "Meduim"),       # max_temp - 10 (30)
