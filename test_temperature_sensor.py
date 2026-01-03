@@ -30,14 +30,14 @@ def test_read_temperature_min_10():
     sensor=TemperatureSensor(min_temp=20,max_temp=40)
     # using patch for random.choice for # min_temp - 10
     with patch('random.choice',return_value=10):
-        temp_2=sensor.readtemperature()
+        temp_2=sensor.read_temperature()
         assert temp_2 == 10
 
 def test_read_temperature_max_10():
     sensor=TemperatureSensor(min_temp=20,max_temp=40)
     # using patch for random.choice for # max_temp + 10
     with patch('random.choice',return_value=50):
-        temp_3=sensor.readtemperature()
+        temp_3=sensor.read_temperature()
         assert temp_3 == 50
 
 #trying to add Test case as csv file and parse tc from csv file
@@ -64,7 +64,7 @@ def write_to_CSV_file():
 
 
 # Test cases for High_Low_temp
-# I am patch read_temperature to control the returned value
+# I am using patch here to read_temperature() to control the return value
 
 @pytest.mark.parametrize("mock_temp,expected_output",[ 
     (10,"Low"),            # min_temp-10
