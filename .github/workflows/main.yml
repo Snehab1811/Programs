@@ -1,5 +1,5 @@
 name: Sensor Test CICD 
-#this acction will be triggered whenever a push or pull request executed for the repository
+#this action will be triggered whenever a push or pull request executed for the repository
 
 on: [push,pull_request]
 
@@ -7,7 +7,7 @@ on: [push,pull_request]
 jobs:
   tests:
   #specified OS to run on
-    runs_on: ubuntu-latest
+    runs_on: windows-latest
     #list of jobs to be performed
     steps: 
     #prebuilt github actions to bring each code repo to runner env
